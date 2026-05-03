@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Probabilistic Sketches Structure",
+  "description": "JSON structure documentation for probabilistic data structures (sketches) used in streaming analytics and approximate query processing",
+  "version": "1.0",
+  "resources": {
+    "HyperLogLog": {
+      "description": "Cardinality estimation sketch for counting distinct values with ~2% error using O(log log n) space",
+      "useCase": "COUNT DISTINCT queries on large datasets, unique visitor counting, distinct IP tracking",
+      "fields": {
+        "precision": { "type": "integer", "range": "4-18", "description": "Precision bits controlling accuracy vs memory tradeoff" },
+        "estimate": { "type": "number", "description": "Estimated cardinality (distinct count)" },
+        "errorRate": { "type": "number", "description": "Standard error rate = 1.04/sqrt(2^precision)" },
+        "serialized": { "type": "string", "description": "Base64-encoded serialized sketch for storage/transfer" }
+      },
+      "implementations": ["Redis HLL", "Apache DataSketches HLL", "Amazon Redshift HLL", "Google BigQuery APPROX_COUNT_DISTINCT"]
+    },
+    "CountMinSketch": {
+      "description": "Frequency estimation sketch that approximates the frequency of elements in a data stream",
+      "useCase": "Heavy hitter detection, network traffic analysis, trending topics, frequency queries",
+      "fields": {
+        "width": { "type": "integer", "description": "Number of columns (controls error rate = e/width)" },
+        "depth": { "type": "integer", "description": "Number of hash functions/rows (controls failure probability)" },
+        "errorRate": { "type": "number", "description": "Maximum overcount per query = epsilon × total_count" },
+        "confidence": { "type": "number", "description": "Probability that estimate is within error bound" }
+      },
+      "implementations": ["Redis CMS", "Apache DataSketches Frequency", "RedisBloom CM-SKETCH"]
+    },
+    "BloomFilter": {
+      "description": "Probabilistic membership testing structure that answers 'might be in set' or 'definitely not in set'",
+      "useCase": "Cache invalidation, URL deduplication, spell checkers, database query optimization",
+      "fields": {
+        "capacity": { "type": "integer", "description": "Expected number of elements to insert" },
+        "falsePositiveRate": { "type": "number", "description": "Target false positive probability (e.g., 0.01 = 1%)" },
+        "bitArraySize": { "type": "integer", "description": "Size of the bit array in bits" },
+        "hashFunctions": { "type": "integer", "description": "Number of hash functions used" },
+        "itemCount": { "type": "integer", "description": "Number of items currently in the filter" }
+      },
+      "implementations": ["Redis BF", "Apache DataSketches", "Guava BloomFilter", "RedisBloom BF"]
+    },
+    "TDigest": {
+      "description": "Quantile estimation sketch for computing percentiles, medians, and trimmed means over streaming data",
+      "useCase": "P95/P99 latency tracking, histogram approximation, percentile analytics, SLA monitoring",
+      "fields": {
+        "compression": { "type": "number", "description": "Compression factor controlling accuracy (higher = more accurate)" },
+        "quantile": { "type": "number", "range": "0-1", "description": "The quantile to estimate (e.g., 0.99 for P99)" },
+        "estimate": { "type": "number", "description": "Estimated value at the queried quantile" },
+        "count": { "type": "integer", "description": "Total count of items added to the sketch" }
+      },
+      "implementations": ["Elasticsearch T-Digest", "Apache Druid", "InfluxDB", "Prometheus histogram_quantile"]
+    },
+    "ThetaSketch": {
+      "description": "Set operations sketch from Apache DataSketches enabling union, intersection, and difference on estimated sets",
+      "useCase": "Audience overlap analysis, A/B group comparisons, multi-dimensional cardinality, funnel analysis",
+      "fields": {
+        "k": { "type": "integer", "description": "Nominal entries parameter controlling accuracy (power of 2)" },
+        "theta": { "type": "number", "description": "The sampling threshold (lower = smaller sketch)" },
+        "estimate": { "type": "number", "description": "Estimated cardinality of the set" },
+        "isEmpty": { "type": "boolean", "description": "Whether the sketch contains no data" }
+      },
+      "operations": ["union", "intersection", "aNotB (set difference)"],
+      "implementations": ["Apache DataSketches Theta", "Apache Druid Theta Sketch"]
+    }
+  },
+  "tradeoffs": {
+    "memoryVsAccuracy": "All sketches trade memory for accuracy. Higher memory configuration yields lower error rates.",
+    "exactVsApproximate": "Exact algorithms (e.g., exact COUNT DISTINCT) require memory proportional to data size. Sketches use fixed memory with bounded error.",
+    "updateVsQuery": "Sketches are optimized for high-throughput updates; some (like T-Digest) have O(log n) query time.",
+    "mergeable": "Most sketches are mergeable: two sketches of the same type can be combined into one, enabling distributed computation."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "sketches": "https://datasketches.apache.org/docs/",
+    "dbpedia": "http://dbpedia.org/resource/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Sketch": "sketches:Sketch",
+    "HyperLogLog": "sketches:HyperLogLog",
+    "CountMinSketch": "sketches:CountMinSketch",
+    "BloomFilter": "sketches:BloomFilter",
+    "TDigest": "sketches:TDigest",
+    "ThetaSketch": "sketches:ThetaSketch",
+    "CuckooFilter": "sketches:CuckooFilter",
+
+    "id": "@id",
+    "type": "@type",
+    "name": "schema:name",
+    "description": "schema:description",
+
+    "precision": "sketches:precision",
+    "errorRate": "sketches:errorRate",
+    "confidence": "sketches:confidence",
+    "estimate": "sketches:estimate",
+    "upperBound": "sketches:upperBound",
+    "lowerBound": "sketches:lowerBound",
+    "exactResult": "sketches:exactResult",
+
+    "width": "sketches:width",
+    "depth": "sketches:depth",
+    "capacity": "sketches:capacity",
+    "falsePositiveRate": "sketches:falsePositiveRate",
+    "bitArraySize": "sketches:bitArraySize",
+    "hashFunctions": "sketches:hashFunctions",
+
+    "quantile": "sketches:quantile",
+    "compression": "sketches:compression",
+    "theta": "sketches:theta",
+    "k": "sketches:nominalEntries",
+
+    "memoryUsage": "sketches:memoryUsageBytes",
+    "itemCount": "sketches:itemCount",
+    "serialized": "sketches:serializedRepresentation",
+
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

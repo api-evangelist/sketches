@@ -1,0 +1,187 @@
+aid: sketches
+name: Sketches (Probabilistic Data Structures) Vocabulary
+description: >-
+  Domain vocabulary, terminology, and taxonomy for probabilistic data structures
+  (sketches) used in streaming analytics, approximate query processing, big data
+  systems, and real-time analytics platforms.
+created: '2026-05-02'
+modified: '2026-05-02'
+
+domains:
+  - name: Core Concepts
+    description: Foundational concepts in probabilistic data structures
+    terms:
+      - term: Sketch
+        definition: >-
+          A compact probabilistic data structure that summarizes a large dataset
+          or data stream using sublinear memory, trading exact answers for
+          approximate answers with provable error bounds. Sketches are designed
+          to be updated in a single pass over data (streaming) and are often
+          mergeable across distributed systems.
+        aliases: [probabilistic data structure, synopsis, summary structure]
+        relatedTerms: [Streaming Algorithm, Approximate Query Processing, Cardinality]
+
+      - term: Streaming Algorithm
+        definition: >-
+          An algorithm that processes a sequence of items (data stream) in a
+          single pass using sublinear memory relative to the stream length.
+          Sketches are a class of streaming algorithms optimized for approximate
+          aggregate queries.
+        aliases: [data stream algorithm, online algorithm]
+        relatedTerms: [Sketch, One-Pass Algorithm]
+
+      - term: Approximate Query Processing
+        definition: >-
+          A class of database and analytics techniques that return approximate
+          answers to aggregation queries with error guarantees, dramatically
+          reducing computation time and resource requirements for queries over
+          large datasets.
+        aliases: [AQP, approximate analytics]
+        relatedTerms: [Sketch, Error Bound, Confidence Interval]
+
+      - term: Cardinality
+        definition: >-
+          The number of distinct elements in a dataset or data stream. Exact
+          cardinality computation requires memory proportional to the number of
+          distinct elements; sketches like HyperLogLog approximate cardinality
+          using fixed memory.
+        aliases: [distinct count, unique count]
+        relatedTerms: [HyperLogLog, COUNT DISTINCT]
+
+      - term: Error Bound
+        definition: >-
+          A mathematically provable guarantee on how far a sketch's estimate can
+          deviate from the true answer. Expressed as relative error (e.g., ±2%)
+          or additive error with a confidence probability (e.g., 99% confidence).
+        aliases: [error guarantee, accuracy bound]
+        relatedTerms: [Confidence Level, Epsilon, False Positive Rate]
+
+      - term: Mergeability
+        definition: >-
+          The property of a sketch that allows two or more sketches of the same
+          type and configuration to be combined into a single sketch whose estimate
+          is equivalent to running the sketch over the union of all input data.
+          Critical for distributed and parallel computing.
+        aliases: [composability, sketch union]
+        relatedTerms: [Parallel Processing, Distributed Computing]
+
+  - name: Sketch Types
+    description: The main categories of probabilistic data structures
+    terms:
+      - term: HyperLogLog
+        definition: >-
+          A probabilistic algorithm for estimating the cardinality (number of
+          distinct elements) of a dataset using O(log log n) space. Achieves
+          approximately 2% standard error with 1.5KB of memory regardless of
+          dataset size. Widely implemented in databases and analytics systems.
+        aliases: [HLL, LogLog, HyperLogLog++]
+        relatedTerms: [Cardinality, COUNT DISTINCT, Flajolet-Martin]
+
+      - term: Count-Min Sketch
+        definition: >-
+          A probabilistic data structure for frequency estimation in data streams.
+          Uses a two-dimensional array of counters with multiple hash functions to
+          approximate the frequency of any element with a bounded overcount error.
+          Invented by Graham Cormode and S. Muthukrishnan in 2003.
+        aliases: [CM-Sketch, Count Min]
+        relatedTerms: [Frequency Estimation, Heavy Hitters, Width, Depth]
+
+      - term: Bloom Filter
+        definition: >-
+          A probabilistic set membership data structure invented by Burton Howard
+          Bloom in 1970. Answers "Is element X in the set?" with either "definitely
+          not" or "probably yes" (false positives possible, false negatives impossible).
+          Uses m bits and k hash functions.
+        aliases: [Bloom, BF]
+        relatedTerms: [False Positive, Membership Query, Cuckoo Filter]
+
+      - term: Cuckoo Filter
+        definition: >-
+          An improved alternative to Bloom Filters that supports deletion of elements
+          and achieves better space efficiency for low false positive rates. Uses
+          cuckoo hashing to store fingerprints in a compact table.
+        aliases: [CF]
+        relatedTerms: [Bloom Filter, Membership Query, False Positive]
+
+      - term: T-Digest
+        definition: >-
+          A probabilistic algorithm for computing accurate percentile and quantile
+          estimates from streaming data, invented by Ted Dunning. Maintains a
+          compressed set of weighted centroids that provide high accuracy at extreme
+          quantiles (P99, P999) with lower accuracy in the middle of the distribution.
+        aliases: [TDigest, t-digest]
+        relatedTerms: [Quantile, Percentile, Latency, P99]
+
+      - term: Theta Sketch
+        definition: >-
+          A family of sketches from Apache DataSketches that enables set operations
+          (union, intersection, set difference) on approximate sets. Uses a sampling
+          threshold (theta) to maintain a compact representation supporting both
+          cardinality estimation and set algebra.
+        aliases: [Theta]
+        relatedTerms: [Apache DataSketches, Set Operations, Cardinality]
+
+      - term: Top-K
+        definition: >-
+          A sketch for finding the k most frequent items in a data stream, also known
+          as the heavy hitters problem. Returns the items that appear more than 1/k
+          of the time with bounded error. Used for trending detection and anomaly finding.
+        aliases: [Heavy Hitters, Frequent Items, Top-K sketch]
+        relatedTerms: [Count-Min Sketch, Frequency Estimation]
+
+  - name: Error Parameters
+    description: Error and accuracy parameters used in sketch configuration
+    terms:
+      - term: Epsilon
+        definition: >-
+          The error parameter in sketch algorithms. Typically represents the maximum
+          relative or additive error allowed in the estimate. Smaller epsilon means
+          higher accuracy but more memory usage.
+        aliases: [ε, error rate]
+        relatedTerms: [Error Bound, Delta, Memory]
+
+      - term: Delta
+        definition: >-
+          The failure probability parameter. A delta of 0.01 means the sketch
+          provides its error guarantee with 99% probability (1% chance of exceeding
+          the error bound).
+        aliases: [δ, confidence complement, failure probability]
+        relatedTerms: [Confidence Level, Error Bound]
+
+      - term: False Positive Rate
+        definition: >-
+          In membership testing sketches (Bloom Filter, Cuckoo Filter), the probability
+          that the sketch incorrectly reports an element as present when it is not.
+          False negatives are impossible — if an element was inserted, it will always
+          be reported as present.
+        aliases: [FPR, false positive probability]
+        relatedTerms: [Bloom Filter, Membership Query]
+
+  - name: Implementations
+    description: Major implementations and platforms for probabilistic sketches
+    terms:
+      - term: Apache DataSketches
+        definition: >-
+          The leading open-source library of production-quality sketch implementations,
+          originally developed at Yahoo and donated to the Apache Software Foundation.
+          Provides Java, C++, and Python implementations of Theta, HLL, Quantiles,
+          Frequency, and other sketch families. Integrated into Apache Druid, Spark,
+          Hive, and Amazon Redshift.
+        aliases: [DataSketches, datasketches-java]
+        relatedTerms: [Theta Sketch, HyperLogLog, Apache Druid]
+
+      - term: RedisBloom
+        definition: >-
+          A Redis module (now part of Redis Stack) providing native server-side
+          implementations of Bloom Filter, Cuckoo Filter, Count-Min Sketch, Top-K,
+          and HyperLogLog as first-class Redis data types with dedicated commands.
+        aliases: [Redis Stack Probabilistic, Redis BF, Redis CMS]
+        relatedTerms: [Bloom Filter, Count-Min Sketch, Redis]
+
+      - term: HyperLogLog in SQL
+        definition: >-
+          Native SQL functions for HyperLogLog cardinality estimation implemented
+          in major analytical databases including Amazon Redshift (HLL_CREATE_SKETCH),
+          Google BigQuery (APPROX_COUNT_DISTINCT, HLL_COUNT.*), Snowflake
+          (APPROX_COUNT_DISTINCT, HLL), and PostgreSQL (via extensions).
+        relatedTerms: [HyperLogLog, Amazon Redshift, BigQuery, Snowflake]
