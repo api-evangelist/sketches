@@ -88,7 +88,7 @@ apis:
 common:
   - type: Website
     url: https://datasketches.apache.org
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/sketches-context.jsonld
   - type: Vocabulary
     url: vocabulary/sketches-vocabulary.yml
