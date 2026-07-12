@@ -86,6 +86,10 @@ apis:
         type: Documentation
 
 common:
+  - type: VulnerabilityDisclosure
+    url: security/sketches-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/sketches-domain-security.yml
   - type: Website
     url: https://datasketches.apache.org
   - type: JSONLD
