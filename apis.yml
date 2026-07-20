@@ -1,6 +1,7 @@
 aid: sketches
 url: https://raw.githubusercontent.com/api-evangelist/sketches/refs/heads/main/apis.yml
 name: Sketches
+kind: topic
 description: >-
   Sketches are probabilistic data structures used in computing and data engineering
   to approximate answers to queries over large data streams with controlled error bounds
