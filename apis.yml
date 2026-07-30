@@ -1,4 +1,17 @@
 aid: sketches
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sketches.png
 url: https://raw.githubusercontent.com/api-evangelist/sketches/refs/heads/main/apis.yml
 name: Sketches
 kind: topic
