@@ -48,6 +48,12 @@ apis:
     humanURL: https://datasketches.apache.org
     baseURL: https://datasketches.apache.org
     tags:
+      - Open-Source
+      - Apache
+      - Data Structures
+      - Probabilistic Algorithms
+      - Analytics
+    tags_raw:
       - Open Source
       - Apache
       - Data Structures
