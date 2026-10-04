@@ -57,9 +57,8 @@ apis:
       OLAP systems including Apache Druid, Apache Spark, and Amazon Redshift. The
       library provides Java, C++, and Python APIs.
     humanURL: https://datasketches.apache.org
-    baseURL: https://datasketches.apache.org
     tags:
-      - Open-Source
+      - Open Source
       - Apache
       - Data Structures
       - Probabilistic Algorithms
@@ -70,6 +69,7 @@ apis:
       - Data Structures
       - Probabilistic Algorithms
       - Analytics
+      - Open-Source
     properties:
       - url: https://datasketches.apache.org
         type: Documentation
