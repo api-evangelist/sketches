@@ -118,6 +118,12 @@ apis:
         type: Documentation
 
 common:
+  - type: Plans
+    url: plans/sketches-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/sketches-rate-limits.yml
+  - type: FinOps
+    url: finops/sketches-finops.yml
   - type: VulnerabilityDisclosure
     url: security/sketches-vulnerability-disclosure.yml
   - type: DomainSecurity
